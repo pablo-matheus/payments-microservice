@@ -24,7 +24,7 @@ The newer Spring Boot versions require the JDK 17, so it will be necessary for y
 if you prefer to run this project using an IDE or the terminal. The following command can be used:
 
 ```bash
-./mvnw spring-boot:run
+mvn spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
 > After running the application, it is possible to access the API documentation to see the available endpoints and test the application: http://localhost:8080/swagger-ui/index.html
