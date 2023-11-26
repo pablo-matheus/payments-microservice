@@ -1,4 +1,4 @@
-# Purchases Microservice
+# Purchase Microservice
 
 ## Requirements
 
