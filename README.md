@@ -5,6 +5,7 @@
 - Install Docker
 - Install Docker Compose
 - JDK 17 (Optional)
+- Maven (Optional)
 
 ## How to Run the Code
 
