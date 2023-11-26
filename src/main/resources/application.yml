@@ -9,14 +9,14 @@ spring:
   h2:
     console.enabled: true
   datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
-    username: sa
-    password:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
     driverClassName: org.h2.Driver
   jpa:
       spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
 
 client:
   united-states-treasury:
-    name: united-states-treasury
-    base-url: https://api.fiscaldata.treasury.gov/services/api/fiscal_service/
+    name: ${CLIENT_UNITED_STATES_TREASURY_NAME}
+    base-url: ${CLIENT_UNITED_STATES_TREASURY_URL}

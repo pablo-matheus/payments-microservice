@@ -1,0 +1,5 @@
+DATABASE_URL: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
+DATABASE_USERNAME: sa
+CLIENT_UNITED_STATES_TREASURY_URL: https://api.fiscaldata.treasury.gov/services/api/fiscal_service/
+CLIENT_UNITED_STATES_TREASURY_NAME: united-states-treasury
+DATABASE_PASSWORD: password
