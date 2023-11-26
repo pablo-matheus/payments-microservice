@@ -21,6 +21,7 @@
 		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
 		<org.projectlombok.version>1.18.30</org.projectlombok.version>
 		<lombok.mapstruct.binding>0.2.0</lombok.mapstruct.binding>
+		<org.springdoc.springdoc-openapi.version>2.1.0</org.springdoc.springdoc-openapi.version>
 		<spring-cloud.version>2023.0.0-RC1</spring-cloud.version>
 	</properties>
 
@@ -46,6 +47,11 @@
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${org.springdoc.springdoc-openapi.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
