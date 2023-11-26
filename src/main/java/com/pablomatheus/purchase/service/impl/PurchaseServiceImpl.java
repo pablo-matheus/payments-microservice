@@ -59,12 +59,8 @@ public class PurchaseServiceImpl implements PurchaseService {
         }
 
         PurchaseDto purchaseDto = purchaseMapper.toDto(purchaseEntity);
-
-        PurchaseAmountDto convertedAmountDto =
-                getConvertedAmount(purchaseDto, currency, country);
-
+        PurchaseAmountDto convertedAmountDto = getConvertedAmount(purchaseDto, currency, country);
         purchaseDto.setConvertedAmount(convertedAmountDto);
-
         return purchaseDto;
     }
 
@@ -72,26 +68,7 @@ public class PurchaseServiceImpl implements PurchaseService {
                                                  String currency,
                                                  String country) {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String startDate = purchaseDto.getTransactionDate().toLocalDate().minusMonths(6).format(formatter);
-        String endDate = purchaseDto.getTransactionDate().toLocalDate().format(formatter);
-
-        String filter = String.format("record_date:gte:%s,record_date:lte:%s,currency:eq:%s,country:eq:%s",
-                startDate, endDate, currency, country);
-
-        ExchangeRateResponse exchangeRateResponse = unitedStatesTreasuryClient.getExchangeRate(filter, "-record_date");
-
-        ExchangeRateDataResponse exchangeRateDataResponse = Optional.ofNullable(exchangeRateResponse)
-                .map(ExchangeRateResponse::getData)
-                .filter(data -> !data.isEmpty())
-                .map(data -> data.get(0))
-                .orElseThrow(() -> {
-                    log.warn("It was not possible to convert the purchase with ID [{}], no exchange rates were found with start date [{}], end date [{}], currency [{}] and country [{}]",
-                            purchaseDto.getId(), startDate, endDate, currency, country);
-
-                    return new ResponseStatusException(
-                            HttpStatus.INTERNAL_SERVER_ERROR, "No exchange rates were found to perform the conversion");
-                });
+        ExchangeRateDataResponse exchangeRateDataResponse = getExchangeRateData(purchaseDto, currency, country);
 
         String convertedAmountValue = new BigDecimal(purchaseDto.getOriginalAmount().getValue())
                 .multiply(exchangeRateDataResponse.getExchangeRate())
@@ -105,6 +82,29 @@ public class PurchaseServiceImpl implements PurchaseService {
         convertedAmountDto.setExchangeRate(exchangeRateDataResponse.getExchangeRate().toPlainString());
 
         return convertedAmountDto;
+    }
+
+    private ExchangeRateDataResponse getExchangeRateData(PurchaseDto purchaseDto, String currency, String country) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String startDate = purchaseDto.getTransactionDate().toLocalDate().minusMonths(6).format(formatter);
+        String endDate = purchaseDto.getTransactionDate().toLocalDate().format(formatter);
+
+        String filter = String.format("record_date:gte:%s,record_date:lte:%s,currency:eq:%s,country:eq:%s",
+                startDate, endDate, currency, country);
+
+        ExchangeRateResponse exchangeRateResponse = unitedStatesTreasuryClient.getExchangeRate(filter, "-record_date");
+
+        return Optional.ofNullable(exchangeRateResponse)
+                .map(ExchangeRateResponse::getData)
+                .filter(data -> !data.isEmpty())
+                .map(data -> data.get(0))
+                .orElseThrow(() -> {
+                    log.warn("It was not possible to convert the purchase with ID [{}], no exchange rates were found with start date [{}], end date [{}], currency [{}] and country [{}]",
+                            purchaseDto.getId(), startDate, endDate, currency, country);
+
+                    return new ResponseStatusException(
+                            HttpStatus.INTERNAL_SERVER_ERROR, "No exchange rates were found to perform the conversion");
+                });
     }
 
 }
