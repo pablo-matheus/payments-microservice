@@ -2,6 +2,7 @@ package com.pablomatheus.purchase.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PurchaseRequest {
 
+    @Size(max = 50)
     @NotBlank
     private String description;
 
@@ -21,8 +23,10 @@ public class PurchaseRequest {
     @NotNull
     private BigDecimal amount;
 
+    @Size(max = 50)
     private String currency = "Dollar";
 
+    @Size(max = 50)
     private String country = "United States";
 
 }

@@ -39,7 +39,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public PurchaseDto getCurrencyConvertedPurchase(String id, String currency, String country) {
+    public PurchaseDto getCurrencyConvertedPurchase(Long id, String currency, String country) {
         Optional<PurchaseEntity> purchaseEntityOptional = purchaseRepository.findById(id);
 
         if (purchaseEntityOptional.isEmpty()) {

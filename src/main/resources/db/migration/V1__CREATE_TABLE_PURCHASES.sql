@@ -2,8 +2,8 @@ CREATE TABLE purchases
 (
     id               INTEGER PRIMARY KEY,
     amount           DOUBLE       NOT NULL,
-    currency         VARCHAR(100) NOT NULL,
-    country          VARCHAR(100) NOT NULL,
+    currency         VARCHAR(50) NOT NULL,
+    country          VARCHAR(50) NOT NULL,
     description      VARCHAR(50)  NOT NULL,
     transaction_date DATETIME     NOT NULL,
     creation_date    DATETIME     NOT NULL

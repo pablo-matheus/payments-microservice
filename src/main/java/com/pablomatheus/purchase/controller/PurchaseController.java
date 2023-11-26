@@ -33,7 +33,7 @@ public class PurchaseController {
     }
 
     @GetMapping("/{id}/exchange-rates/conversion")
-    public PurchaseResponse getCurrencyConvertedPurchase(@PathVariable String id,
+    public PurchaseResponse getCurrencyConvertedPurchase(@PathVariable Long id,
                                                          @RequestParam String currency,
                                                          @RequestParam String country) {
 
