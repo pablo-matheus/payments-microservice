@@ -43,13 +43,13 @@ public class PurchaseServiceImpl implements PurchaseService {
         Optional<PurchaseEntity> purchaseEntityOptional = purchaseRepository.findById(id);
 
         if (purchaseEntityOptional.isEmpty()) {
-            log.warn("Purchase not found with the ID [{}]", id);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Purchase not found");
+            log.warn("The purchase was not found with the ID [{}]", id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The purchase was not found");
         }
 
         PurchaseEntity purchaseEntity = purchaseEntityOptional.get();
 
-        if (!Objects.equals(purchaseEntity.getCurrency(), "Dollar") &&
+        if (!Objects.equals(purchaseEntity.getCurrency(), "Dollar") ||
             !Objects.equals(purchaseEntity.getCountry(), "United States")) {
 
             log.warn("It's not possible to convert the purchase with ID [{}], the currency conversion is not available for [{}] and  country [{}]",
