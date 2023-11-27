@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Currency {
 
-    USD("United States", "Dollar");
+    USD("Dollar", "United States");
 
     private final String name;
     private final String country;
