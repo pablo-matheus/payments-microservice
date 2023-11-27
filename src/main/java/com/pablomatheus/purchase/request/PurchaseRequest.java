@@ -1,5 +1,6 @@
 package com.pablomatheus.purchase.request;
 
+import com.pablomatheus.purchase.enumeration.Currency;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -23,10 +24,7 @@ public class PurchaseRequest {
     @NotNull
     private BigDecimal amount;
 
-    @Size(max = 50)
-    private String currency = "Dollar";
-
-    @Size(max = 50)
-    private String country = "United States";
+    @NotNull
+    private Currency currency;
 
 }

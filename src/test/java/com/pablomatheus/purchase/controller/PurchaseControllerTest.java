@@ -2,6 +2,7 @@ package com.pablomatheus.purchase.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pablomatheus.purchase.dto.PurchaseDto;
+import com.pablomatheus.purchase.enumeration.Currency;
 import com.pablomatheus.purchase.mapper.PurchaseMapper;
 import com.pablomatheus.purchase.request.PurchaseRequest;
 import com.pablomatheus.purchase.response.PurchaseResponse;
@@ -53,6 +54,7 @@ class PurchaseControllerTest {
         purchaseRequest.setAmount(new BigDecimal("11.25"));
         purchaseRequest.setDescription("Test");
         purchaseRequest.setTransactionDate(LocalDateTime.now());
+        purchaseRequest.setCurrency(Currency.USD);
 
         PurchaseDto purchaseDto = new PurchaseDto();
 
@@ -149,12 +151,11 @@ class PurchaseControllerTest {
     }
 
     @Test
-    void givenOutOfLimitCurrencyWhenAddPurchaseThenStatus400BadRequest() throws Exception {
+    void givenNullCurrencyWhenAddPurchaseThenStatus400BadRequest() throws Exception {
         PurchaseRequest purchaseRequest = new PurchaseRequest();
         purchaseRequest.setAmount(new BigDecimal("11.25"));
         purchaseRequest.setDescription("Test");
         purchaseRequest.setTransactionDate(LocalDateTime.now());
-        purchaseRequest.setCurrency("Testttttttttttttttttttttttttttttttttttttttttttttttt");
 
         RequestBuilder request = MockMvcRequestBuilders.post(V1_PURCHASES)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -168,16 +169,12 @@ class PurchaseControllerTest {
     }
 
     @Test
-    void givenOutOfLimitCountryWhenAddPurchaseThenStatus400BadRequest() throws Exception {
-        PurchaseRequest purchaseRequest = new PurchaseRequest();
-        purchaseRequest.setAmount(new BigDecimal("11.25"));
-        purchaseRequest.setDescription("Test");
-        purchaseRequest.setTransactionDate(LocalDateTime.now());
-        purchaseRequest.setCountry("Testttttttttttttttttttttttttttttttttttttttttttttttt");
+    void givenInvalidCurrencyWhenAddPurchaseThenStatus400BadRequest() throws Exception {
+        String jsonRequest = "{\"description\":\"Test\",\"transactionDate\":\"2023-10-21T13:00:00\",\"amount\":\"11.25\",\"currency\":\"XXX\"}";
 
         RequestBuilder request = MockMvcRequestBuilders.post(V1_PURCHASES)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(purchaseRequest));
+                .content(jsonRequest);
 
         mvc.perform(request)
                 .andExpect(status().isBadRequest());

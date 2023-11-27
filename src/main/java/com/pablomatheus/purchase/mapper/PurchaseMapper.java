@@ -11,8 +11,8 @@ import org.mapstruct.Mapping;
 public interface PurchaseMapper {
 
     @Mapping(target = "originalAmount.value", source = "amount")
-    @Mapping(target = "originalAmount.currency", source = "currency")
-    @Mapping(target = "originalAmount.country", source = "country")
+    @Mapping(target = "originalAmount.currency", source = "currency.name")
+    @Mapping(target = "originalAmount.country", source = "currency.country")
     PurchaseDto toDto(PurchaseRequest purchaseRequest);
 
     @Mapping(target = "originalAmount.value", source = "amount")
