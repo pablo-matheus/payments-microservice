@@ -67,7 +67,7 @@ change that much in the future. The microservice has its own database that conta
   objective of the product and the quantity of calls to this service, it would not be necessary. If validation,
   processing, or capturing transactions involve multiple steps, and storing purchases is a time-consuming process that
   integrates with other services, opting for asynchronous communication can offer significant advantages.
-- **Precision Handling:** Utilized `BigDecimal` ****for fields and calculations requiring precision, ensuring accurate
+- **Precision Handling:** Utilized `BigDecimal` for fields and calculations requiring precision, ensuring accurate
   representation.
 - **Database Scripts Versioning:** Employed Flyway for effective versioning of database scripts.
 - **Object Conversions:** Implemented object conversions seamlessly using Mapstruct, enhancing efficiency in data
