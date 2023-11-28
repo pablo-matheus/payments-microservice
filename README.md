@@ -38,6 +38,7 @@ For currency conversion:
 
 ### Defining Project Scope and Microservice Domain
 
+The project's scope remains open, allowing for various architectures depending on the defined product objectives.
 Constructing a complex architecture without a clear objective may prove counterproductive. The chosen architecture is
 influenced by interconnected software components, the potential for synchronous or asynchronous processing, and other
 relevant factors.
