@@ -31,7 +31,7 @@ public class PurchaseEntity {
 
     private String currency;
 
-    private String country;
+    private String currencyCountry;
 
     private LocalDateTime transactionDate;
 

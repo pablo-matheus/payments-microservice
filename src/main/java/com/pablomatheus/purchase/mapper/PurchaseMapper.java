@@ -17,14 +17,14 @@ public interface PurchaseMapper {
 
     @Mapping(target = "originalAmount.value", source = "amount")
     @Mapping(target = "originalAmount.currency", source = "currency")
-    @Mapping(target = "originalAmount.country", source = "country")
+    @Mapping(target = "originalAmount.country", source = "currencyCountry")
     PurchaseDto toDto(PurchaseEntity purchaseEntity);
 
     PurchaseResponse toResponse(PurchaseDto purchaseDto);
 
     @Mapping(target = "amount", source = "originalAmount.value")
     @Mapping(target = "currency", source = "originalAmount.currency")
-    @Mapping(target = "country", source = "originalAmount.country")
+    @Mapping(target = "currencyCountry", source = "originalAmount.country")
     PurchaseEntity toEntity(PurchaseDto purchaseDto);
 
 }

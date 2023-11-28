@@ -74,7 +74,7 @@ class PurchaseServiceImplTest {
 
         PurchaseEntity purchaseEntity = new PurchaseEntity();
         purchaseEntity.setCurrency("Dollar");
-        purchaseEntity.setCountry("United States");
+        purchaseEntity.setCurrencyCountry("United States");
 
         PurchaseDto purchaseDto = new PurchaseDto();
         purchaseDto.setTransactionDate(LocalDateTime.now());
@@ -97,7 +97,7 @@ class PurchaseServiceImplTest {
 
         given(purchaseRepository.findById(id)).willReturn(Optional.of(purchaseEntity));
         given(purchaseMapper.toDto(purchaseEntity)).willReturn(purchaseDto);
-        given(unitedStatesTreasuryClient.getExchangeRate(anyString(), eq("-record_date"))).willReturn(exchangeRateResponse);
+        given(unitedStatesTreasuryClient.getExchangeRate(anyString(), eq("-effective_date"))).willReturn(exchangeRateResponse);
 
         PurchaseDto result = purchaseService.getCurrencyConvertedPurchase(id, currency, country);
 
@@ -108,7 +108,7 @@ class PurchaseServiceImplTest {
 
         verify(purchaseRepository, times(1)).findById(id);
         verify(purchaseMapper, times(1)).toDto(purchaseEntity);
-        verify(unitedStatesTreasuryClient, times(1)).getExchangeRate(anyString(), eq("-record_date"));
+        verify(unitedStatesTreasuryClient, times(1)).getExchangeRate(anyString(), eq("-effective_date"));
 
         verifyNoMoreInteractions(purchaseRepository);
         verifyNoMoreInteractions(purchaseMapper);
@@ -123,7 +123,7 @@ class PurchaseServiceImplTest {
 
         PurchaseEntity purchaseEntity = new PurchaseEntity();
         purchaseEntity.setCurrency("Dollar");
-        purchaseEntity.setCountry("United States");
+        purchaseEntity.setCurrencyCountry("United States");
 
         PurchaseDto purchaseDto = new PurchaseDto();
         purchaseDto.setTransactionDate(LocalDateTime.now());
@@ -132,7 +132,7 @@ class PurchaseServiceImplTest {
 
         given(purchaseRepository.findById(id)).willReturn(Optional.of(purchaseEntity));
         given(purchaseMapper.toDto(purchaseEntity)).willReturn(purchaseDto);
-        given(unitedStatesTreasuryClient.getExchangeRate(anyString(), eq("-record_date"))).willReturn(exchangeRateResponse);
+        given(unitedStatesTreasuryClient.getExchangeRate(anyString(), eq("-effective_date"))).willReturn(exchangeRateResponse);
 
         ResponseStatusException exception = Assertions.assertThrows(
                 ResponseStatusException.class,
@@ -143,7 +143,7 @@ class PurchaseServiceImplTest {
 
         verify(purchaseRepository, times(1)).findById(id);
         verify(purchaseMapper, times(1)).toDto(purchaseEntity);
-        verify(unitedStatesTreasuryClient, times(1)).getExchangeRate(anyString(), eq("-record_date"));
+        verify(unitedStatesTreasuryClient, times(1)).getExchangeRate(anyString(), eq("-effective_date"));
 
         verifyNoMoreInteractions(purchaseRepository);
         verifyNoMoreInteractions(purchaseMapper);
@@ -158,7 +158,7 @@ class PurchaseServiceImplTest {
 
         PurchaseEntity purchaseEntity = new PurchaseEntity();
         purchaseEntity.setCurrency("Dollar");
-        purchaseEntity.setCountry("Canada");
+        purchaseEntity.setCurrencyCountry("Canada");
 
         given(purchaseRepository.findById(id)).willReturn(Optional.of(purchaseEntity));
 
@@ -185,7 +185,7 @@ class PurchaseServiceImplTest {
 
         PurchaseEntity purchaseEntity = new PurchaseEntity();
         purchaseEntity.setCurrency("Pesos");
-        purchaseEntity.setCountry("United States");
+        purchaseEntity.setCurrencyCountry("United States");
 
         given(purchaseRepository.findById(id)).willReturn(Optional.of(purchaseEntity));
 

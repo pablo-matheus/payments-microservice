@@ -50,7 +50,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         PurchaseEntity purchaseEntity = purchaseEntityOptional.get();
 
         if (!Objects.equals(purchaseEntity.getCurrency(), "Dollar") ||
-            !Objects.equals(purchaseEntity.getCountry(), "United States")) {
+            !Objects.equals(purchaseEntity.getCurrencyCountry(), "United States")) {
 
             log.warn("It's not possible to convert the purchase with ID [{}], the currency conversion is not available for [{}] and  country [{}]",
                     id, currency, country);
@@ -89,10 +89,10 @@ public class PurchaseServiceImpl implements PurchaseService {
         String startDate = purchaseDto.getTransactionDate().toLocalDate().minusMonths(6).format(formatter);
         String endDate = purchaseDto.getTransactionDate().toLocalDate().format(formatter);
 
-        String filter = String.format("record_date:gte:%s,record_date:lte:%s,currency:eq:%s,country:eq:%s",
+        String filter = String.format("effective_date:gte:%s,effective_date:lte:%s,currency:eq:%s,country:eq:%s",
                 startDate, endDate, currency, country);
 
-        ExchangeRateResponse exchangeRateResponse = unitedStatesTreasuryClient.getExchangeRate(filter, "-record_date");
+        ExchangeRateResponse exchangeRateResponse = unitedStatesTreasuryClient.getExchangeRate(filter, "-effective_date");
 
         return Optional.ofNullable(exchangeRateResponse)
                 .map(ExchangeRateResponse::getData)
